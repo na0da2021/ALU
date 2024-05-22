@@ -5,56 +5,49 @@ module alu( input  [7:0] a, b,
 				output reg cout, c_flag, z_flag
 			  );
 			  
-wire [7:0] mid_out1,  mid_out2;
-wire       mid_cout1, mid_cout2;
+	wire [7:0] mid_out;
+wire       mid_cout;
 			  
-full_add_sub a0 (.s(mid_out1), .cout(mid_cout1), .a(a), .b(b), .cin(0));
-full_add_sub a1 (.s(mid_out2), .cout(mid_cout2), .a(a), .b(b), .cin(1));
+	full_add_sub a0 (.s(mid_out), .cout(mid_cout), .a(a), .b(b), .cin(opcode[0]));
 
 always @(*)
 begin
-c_flag = 0 ;
-z_flag = 0 ; 
+c_flag = 0 ;  //carry_flag
+z_flag = 0 ;
+cout = 0;
 case(opcode)
  
  3'b000 :  begin
-            out = mid_out1;
-				cout= mid_cout1;
+            out = mid_out;
+				cout= mid_cout;
 		     end
  
  3'b001 : begin
-            out = mid_out2;
-				cout= mid_cout2;
+            out = mid_out;
 		     end
  
  3'b010 : begin
             out = a &  b;
-				cout= 0;
 		    end
  
  3'b011 : begin  
             out = a |  b;
-				cout= 0;
 			 end
  
  3'b100 : begin  
             out = a ^  b; 
-				cout= 0;
 			 end
  
  3'b101 : begin  
             out = a >  b;
-				cout= 0;
 			 end
  
  3'b110 : begin  
             out = a << 1;
-				cout= 0;
 			 end
  
  3'b111 : begin  
             out = b << 1;
-				cout= 0;
 			 end
  
 endcase
