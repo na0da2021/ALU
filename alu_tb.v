@@ -5,8 +5,10 @@ reg  [2:0] opcode;
 wire [7:0] out;
 wire cout, c_flag, z_flag;
 
+alu dut(.a(a), .b(b), .opcode(opcode), .out(out), .cout(cout), .c_flag(c_flag), .z_flag(z_flag));
 initial begin
 $monitor(" a = %b | b = %b | opcode = %b | out = %b | carry_out = %b carry_flag = %b | Zero_flag = %b\n" , a, b, opcode, out, cout, c_flag, z_flag);
+
 // test addition
 a = 8;
 b = 20;
@@ -57,7 +59,7 @@ a = 8'b01101101;
 opcode = 110;
 // test b << 1
 #50
-a = 8'b10001110;
+b = 8'b10001110;
 opcode = 111;
 end
 
